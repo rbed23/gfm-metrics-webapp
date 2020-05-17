@@ -1,0 +1,30 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+honcho = "*"
+radon = "*"
+wily = "*"
+pre-commit = "*"
+pylint = "*"
+
+[packages]
+requests = "*"
+flask = "*"
+gunicorn = "*"
+python-dotenv = "*"
+psycopg2 = "==2.8.4"
+flask-sqlalchemy = "===2.4.1"
+flask-migrate = "==2.5.2"
+flask-script = "==2.0.6"
+nltk = "==3.4.5"
+beautifulsoup4 = "==4.8.2"
+redis = "*"
+rq = "*"
+tld = "*"
+validators = "*"
+
+[requires]
+python_version = "3.7.4"
