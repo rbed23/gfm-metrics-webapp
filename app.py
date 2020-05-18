@@ -24,7 +24,7 @@ from modules import app_manager
 from worker import conn
 
 
-app = Flask(__name__, template_folder='gfm-site-templates/')
+app = Flask(__name__, template_folder='gfm-app-templates/')
 app.config.from_object(os.environ['APP_SETTINGS'])
 
 db = SQLAlchemy(app)        # instatiate DB from app
@@ -123,6 +123,7 @@ def get_results(job_key):
                 result.results.items(),
                 reverse=True
             )
+            response.append(result.url)
         else:
             # of type <list>
             response[0] = "err"

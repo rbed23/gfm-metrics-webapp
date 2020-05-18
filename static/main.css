@@ -29,3 +29,29 @@ box-shadow: 2px 2px 2px gray;
     margin: 4px auto;
     max-width: 800px;
   }
+
+#results-wrapper {
+    overflow: auto;
+    clear: both;
+}
+
+#results-right-side {
+    float: right;
+    align-items: flex-start;
+    width: 25%;
+}
+
+#results-left-side {
+    float: left;
+    width: 70%;
+}
+
+#anonymous-text {
+    color: lightslategray;
+    font-size: smaller;
+    text-align: right;
+}
+
+#is-currency {
+    currenc
+}

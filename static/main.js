@@ -9,7 +9,7 @@
         $scope.submitButtonText = "Submit";
         $scope.loading = false;
         $scope.urlerror = false;
-
+      
         $scope.getResults = function() {
 
           var userInput = $scope.url;
@@ -50,6 +50,7 @@
                     }
                     else {
                       $scope.responseData = resultsOrganizer(data[1])
+                      $scope.responseURL = data[2];
                       $scope.loading = false;
                       $scope.submitButtonText = "Submit";
                     }
@@ -75,7 +76,7 @@
                 numDonations: input[1][1],
                 //listNonnonymous: input[2],
                 listDonations: input[3][1],
-                //listAnonymous: input[4],
+                listAnonymous: input[4][1],
                 listComplete: input[5][1],
                 bigDonors50: input[6][1],
                 bigDonors25: input[7][1],
@@ -88,19 +89,30 @@
               };
 
               var array = dataResponse.listDonations;
-
               dataResponse['amtTotal'] = array.reduce((s,c) => (s + c), 0);
-  
               dataResponse['amtMax'] = Math.max(...array);
-
               dataResponse['amtMean'] = Math.floor(array.reduce((acc, val) => (acc + val), 0) / array.length);
-
-              var medianArray = array.sort();
+              var medianArray = array.sort((a,b) => a - b);
               var mid = medianArray.length / 2;
               dataResponse['amtMedian'] = mid % 1 ? medianArray[mid - 0.5] : (medianArray[mid - 1] + medianArray[mid]) / 2;
-
+              
+              // for anonymous donations
+              var mappedAnonArray = Array.from(dataResponse.listAnonymous.values());
+              var anonArray = [];
+              for (var i=0; i<mappedAnonArray.length; i++) {
+                anonArray.push(mappedAnonArray[i].amount);
+              };
+              dataResponse['anonMean'] = Math.floor(anonArray.reduce((acc, val) => (acc + val), 0) / anonArray.length);
+              var medianArray = anonArray.sort((a,b) => a - b);
+              var mid = medianArray.length / 2;
+              dataResponse['anonMedian'] = mid % 1 ? medianArray[mid - 0.5] : (medianArray[mid - 1] + medianArray[mid]) / 2;
+              
               return dataResponse;
-            };
+            }
+
+            function bigDonorsOrganizer(input) {
+               
+            }
             poller();
         };
       }
@@ -134,5 +146,12 @@
             }, true);
           }          
          };
-      }]);
+      }])
+
+    .filter('trusted', ['$sce', function ($sce) {
+      return function(url) {
+          return $sce.trustAsResourceUrl(url);
+      };
+    }]);
+
   }());

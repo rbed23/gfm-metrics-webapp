@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html ng-app="gfmMetricsApp">
+<head>
+    <title>GFM Campaign Metrics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" type="text/css" href="../static/main.css">
+    <style>
+      .container {
+        max-width: 1000px;
+      }
+    </style>
+  </head>
+  <body ng-controller="gfmMetricsController">
+
+    <div class="container">
+      <div class="row" style="text-align: center;">
+          <h1>GFM Campaign Metrics & Analysis Page</h1>
+          <br>
+          <h3>Provide the URL of the GoFundMe Campaign's main page</h3>
+          <br>
+          <form role="form" ng-submit="getResults()">
+
+            <div class="form-group" style="text-align: center;">
+              
+              <input class="form-control" type="text" id="search" 
+                     ng-model="url" required name="url" 
+                     id="url-box" placeholder="Enter URL [ex: https://www.gofundme.com/...]"> 
+              <br>
+              <button type="submit" class="btn btn-primary"
+                      ng-disabled="loading">{% raw %}{{ submitButtonText }}{% endraw %}</button>
+              <br><br>
+            </div>
+
+            <div class="alert alert-danger" role="alert" ng-show='urlerror' style="text-align: left;">
+              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+              <span class="sr-only">Error:</span>
+              <span>
+                There was one or more error(s) submitting your URL.<br>
+                {% raw %}
+                <div ng-repeat="err in responseData">
+                    >>> {{ err }}<br>
+                </div>
+                {% endraw %}
+                Please check to make sure your URL is valid before trying again...</span>
+            </div>
+
+          </form>
+      </div>
+    </div>
+    <div class='container'>
+        <div class="row" style="text-align: justify-self start">
+          <br>
+          <h1>Metrics and Analysis</h1>
+          <br>
+
+          <!--div id="results" ng-show="responseData"-->
+          <div id="results-wrapper">
+            {% raw %}
+
+              <div id="results-left-side">
+                <p><a href="{{ responseURL }}">Go to the Campaign!</a></p><br>
+                <iframe name="gfmPage" ng-src="{{ responseURL | trusted }}" height="500px" width="100%" frameborder="1"></iframe>
+                <!--<ng-include src="responseURL | trusted"></ng-include-->
+                <!-- for more information on CORS and embedding webpages...
+                https://stackoverflow.com/questions/3076414/ways-to-circumvent-the-same-origin-policy-->
+              </div>
+  
+              <div id="results-right-side">
+  
+                <table class="table table-striped" style="text-align: left; float: inline-end;">
+                  <thead>
+                    <tr>
+                      <th>Metric</th>
+                      <th>Value<br></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Total Amounts<br></td>
+                      <td>${{ responseData.amtTotal }}</td>
+                    </tr>
+                    <tr>
+                      <td>Number Donations</td>
+                      <td>{{ responseData.numDonations }}</td>
+                    </tr>
+                    <tr>
+                      <td>Number Donors</td>
+                      <td>{{ responseData.numDonors }}</td>
+                    </tr>
+                    <tr>
+                      <td id="anonymous-text"><i>Anonymous Donors</i></td>
+                      <td id="anonymous-text"><i>{{ responseData.listAnonymous.length }}</i></td>
+                    </tr>
+                    <tr>
+                      <td>Avgerage Donation</td>
+                      <td>${{ responseData.amtMean }}</td>
+                    </tr>
+                    <tr>
+                      <td id="anonymous-text"><i>Anonymous Avg</i></td>
+                      <td id="anonymous-text"><i>${{ responseData.anonMean }}</i></td>
+                    </tr>
+                    <tr>
+                      <td>Median Donation</td>
+                      <td>${{ responseData.amtMedian }}</td>
+                    </tr>
+                    <tr>
+                      <td id="anonymous-text"><i>Anonymous Median</i></td>
+                      <td id="anonymous-text"><i>${{ responseData.anonMedian }}</i></td>
+                    </tr>
+                    <tr>
+                      <td>Maximum Donation</td>
+                      <td>${{ responseData.amtMax }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <h3><u>Big Donors List</u></h3>
+                <br>
+                <div ng-show="responseData.bigDonors50.length > 0">
+                  <h4>Donated Over 50% of Total</h4>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="d in responseData.bigDonors50">
+                      <tr>
+                        <td>{{ d.full_name }}</td>
+                        <td>${{ d.amount }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <br><br></div>
+                <div ng-show="responseData.bigDonors25.length > 0">
+                  <h4>Donated Over 25% of Total</h4>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="d in responseData.bigDonors25">
+                      <tr>
+                        <td>{{ d.full_name }}</td>
+                        <td>${{ d.amount }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <br><br></div>
+                <div ng-show="responseData.bigDonors20.length > 0">
+                  <h4>Donated Over 20% of Total</h4>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="d in responseData.bigDonors20">
+                      <tr>
+                        <td>{{ d.full_name }}</td>
+                        <td>${{ d.amount }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <br><br></div>
+                <div ng-show="responseData.bigDonors10.length > 0">
+                  <h4>Donated Over 10% of Total</h4>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="d in responseData.bigDonors10">
+                      <tr>
+                        <td>{{ d.full_name }}</td>
+                        <td>${{ d.amount }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <br><br></div>
+                <div ng-show="responseData.bigDonors05.length > 0">
+                  <h4>Donated Over 5% of Total</h4>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="d in responseData.bigDonors05">
+                      <tr>
+                        <td>{{ d.full_name }}</td>
+                        <td>${{ d.amount }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <br><br></div>
+                <div ng-show="responseData.bigDonors03.length > 0">
+                  <h4>Donated Over 3% of Total</h4>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="d in responseData.bigDonors03">
+                      <tr>
+                        <td>{{ d.full_name }}</td>
+                        <td>${{ d.amount }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <br><br></div>
+                <div ng-show="responseData.bigDonors02.length > 0">
+                  <h4>Donated Over 2% of Total</h4>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="d in responseData.bigDonors02">
+                      <tr>
+                        <td>{{ d.full_name }}</td>
+                        <td>${{ d.amount }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <br><br></div>
+                <div ng-show="responseData.bigDonors01.length > 0">
+                  <h4>Donated Over 1% of Total</h4>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="d in responseData.bigDonors01">
+                      <tr>
+                        <td>{{ d.full_name }}</td>
+                        <td>${{ d.amount }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+            {% endraw %}
+          </div>
+          <img class="col-sm-3 col-sm-offset-4" src="{{ url_for('static',
+          filename='spinner.gif') }}" ng-show="loading">
+        </div>
+      </div>
+      <br>
+      <word-count-chart data="wordcounts"></word-count-chart>
+    </div>
+    <br><br>
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+  </body>
+</html>
