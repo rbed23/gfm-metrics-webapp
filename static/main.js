@@ -110,9 +110,6 @@
               return dataResponse;
             }
 
-            function bigDonorsOrganizer(input) {
-               
-            }
             poller();
         };
       }
