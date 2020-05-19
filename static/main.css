@@ -35,17 +35,15 @@ box-shadow: 2px 2px 2px gray;
     clear: both;
 }
 
-#results-left-side {
-    float: left;
-    width: 70%;
-    text-align: left;
-}
-
 #results-right-side {
     float: right;
     align-items: flex-start;
     width: 25%;
-    text-align: left;
+}
+
+#results-left-side {
+    float: left;
+    width: 70%;
 }
 
 #anonymous-text {
