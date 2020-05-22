@@ -52,7 +52,7 @@ def worker_task(url):
 
 
 def db_put(url, results=None, errors=None):
-    
+    errors= []
     # save the results
     try:
         from models import Result

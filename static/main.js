@@ -149,6 +149,12 @@
     return function(url) {
         return $sce.trustAsResourceUrl(url);
     };
-  }]);
+  }])
+
+  .filter('dateTimeChop', function() {
+    return function(input, startIdx, stopIdx) {
+      return input.slice(startIdx, stopIdx);
+    };
+  });
 
 }());
