@@ -1,5 +1,7 @@
 '''performs basic metrics analysis on GFM donations'''
-from collections import OrderedDict
+from collections import OrderedDict, Counter
+from datetime import date as d
+from dateutil.parser import parse
 from statistics import mean, median
 import json
 from operator import itemgetter
@@ -176,6 +178,14 @@ def fix_names(name):
     return names_array
 
 
+def get_donations_count(donationsList):
+    dtv_week = []
+    for each in donationsList:
+        dtvkey = parse(each['created_at']).date()
+        dtv_week.append(dtvkey.isocalendar()[1])
+    return Counter(dtv_week)
+
+
 def main(url):
     print(f"Called script using <{url}> as input...")
 
@@ -242,6 +252,8 @@ def main(url):
         "big_donor_25": big_donor_list_25,
         "big_donor_50": big_donor_list_50
     }
+
+    response['_counts_by_week'] = get_donations_count(cleaned_list)
 
     with open('response.json', 'w+') as w:
         w.write(json.dumps(response, indent=4))

@@ -22,6 +22,7 @@
               $scope.loading = true;
               $scope.urlerror = false;
               $scope.responseData = null;
+              $scope.donationsCountByWeek = null;
               $scope.errorsData = null;
           })
           .error(function(error) {
@@ -43,13 +44,14 @@
               } else if (status === 200){
                   $log.log(data[1]);
                   if (data[0] == "err"){
-                    $scope.urlerror = true
+                    $scope.urlerror = true;
                     $scope.loading = false;
                     $scope.responseData = data[1];
                     $scope.submitButtonText = "Submit";
                   }
                   else {
-                    $scope.responseData = resultsOrganizer(data[1])
+                    $scope.responseData = resultsOrganizer(data[1]);
+                    $scope.donationsCountByWeek = $scope.responseData.donationsByWeek;
                     $scope.responseURL = data[2];
                     $scope.loading = false;
                     $scope.submitButtonText = "Submit";
@@ -85,7 +87,8 @@
               bigDonors05: input[10][1],
               bigDonors03: input[11][1],
               bigDonors02: input[12][1],
-              bigDonors01: input[13][1]
+              bigDonors01: input[13][1],
+              donationsByWeek: input[14][1]
             };
 
             var array = dataResponse.listDonations;
@@ -115,35 +118,36 @@
     }
   ])
 
-  .directive('wordCountChart', ['$parse', function ($parse) {
-      return {
-        restrict: 'E',
-        replace: true,
-        template: '<div id="chart"></div>',
-        link: function (scope) {
-          scope.$watch('wordcounts', function() {
-              d3.select('#chart').selectAll('*').remove();
-              var data = scope.wordcounts;
-              for (var word in data) {
-                var key = data[word][0];
-                var value = data[word][1];
-                d3.select('#chart')
-                  .append('div')
-                  .selectAll('div')
-                  .data(word[0])
-                  .enter()
-                  .append('div')
-                  .style('width', function() {
-                      return (value * 3) + 'px';
-                  })
-                  .text(function(d) {
-                      return key;
-                  });
-              }
-          }, true);
-        }
-       };
-    }])
+  .directive('donationsCountChart', ['$parse', function ($parse) {
+    return {
+      restrict: 'E',
+      replace: true,
+      template: '<div id="chart"></div>',
+      link: function (scope) {
+        scope.$watch('donationsCountByWeek', function() {
+          console.log("directive loaded...");
+          d3.select('#chart').selectAll('*').remove();
+          var data = scope.donationsCountByWeek
+          for (var each in data){
+            var key = each;
+            var value = data[each];
+            d3.select('#chart')
+            .append('div')
+            .selectAll('div')
+            .data(key)
+            .enter()
+            .append('div')
+            .style('width', function() {
+              return (value * 30) + 'px';
+            })
+            .text(function(){
+              return (value + " (week " + key + ")");
+            });
+          }
+        }, true);
+      }
+    };
+  }])
 
   .filter('trusted', ['$sce', function ($sce) {
     return function(url) {
@@ -153,8 +157,12 @@
 
   .filter('dateTimeChop', function() {
     return function(input, startIdx, stopIdx) {
-      return input.slice(startIdx, stopIdx);
+        return input.slice(startIdx, stopIdx);
     };
+  })
+
+  .config(function($logProvider){
+    $logProvider.debugEnabled(true);
   });
 
 }());
