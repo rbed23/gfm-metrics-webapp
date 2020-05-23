@@ -19,7 +19,9 @@ if __name__ == '__main__':
     # assumptions: redis-server is running
     try:
         with Connection(conn):
+            print("starting worker...")
             worker = Worker(list(map(Queue, listen)))
+            print(worker)
             worker.work()
     except Exception as e:
         print(f"{str(e)}")
