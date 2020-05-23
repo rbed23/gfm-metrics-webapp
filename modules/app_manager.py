@@ -26,7 +26,6 @@ def url_manager(url):
         return False, errors
     else:
         status, errs = url_check(url)
-        print(status, errs)
         if status != 200:
             errors.extend(errs)
             return False, errors

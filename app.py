@@ -97,11 +97,13 @@ def load_worker():
         url = 'http://' + url
 
     # throw job to worker
+    print("grabbing job...")
     job = q.enqueue_call(
         func=worker_task,
         args=(url,),
         result_ttl=5000
     )
+    print(f"job.id: {job.get_id()}")
 
     return job.get_id()
 

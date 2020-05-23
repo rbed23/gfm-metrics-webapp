@@ -20,6 +20,8 @@ if __name__ == '__main__':
     try:
         with Connection(conn):
             worker = Worker(list(map(Queue, listen)))
+            print(worker)
             worker.work()
+            print("starting work...")
     except Exception as e:
         print(f"{str(e)}")
