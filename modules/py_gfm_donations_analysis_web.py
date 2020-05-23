@@ -258,9 +258,6 @@ def main(url):
     with open('response.json', 'w+') as w:
         w.write(json.dumps(response, indent=4))
 
-    print(mean([d['amount'] for d in anondonations_list]))
-    print(median([d['amount'] for d in anondonations_list]))
-    print(len([d['amount'] for d in anondonations_list]))
     return response
 
 
