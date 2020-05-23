@@ -31,27 +31,17 @@ box-shadow: 2px 2px 2px gray;
     }
 
 #results-wrapper {
-    overflow: auto;
     clear: both;
 }
 
 #results-left-side {
     float: left;
-    width: 70%;
     text-align: left;
-    padding-right:0;
-    padding-left:0;
-    margin: 0 !important;
 }
 
 #results-right-side {
     float: right;
-    align-items: flex-start;
-    width: 25%;
     text-align: left;
-    padding-right:0;
-    padding-left:0;
-    margin: 0 !important;
 }
 
 #anonymous-text {
