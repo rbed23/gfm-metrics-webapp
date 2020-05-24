@@ -31,7 +31,7 @@ def url_manager(url):
             return False, errors
         else:
             results = py_gfm_donations_analysis_web.main(url)
-        return True, results
+            return True, results
 
 
 def url_check(url):
@@ -39,6 +39,8 @@ def url_check(url):
     try:
         req = get(url)
         req.raise_for_status()
+        return req.status_code, None
+
     except (req_exc.HTTPError,
             req_exc.ConnectionError,
             req_exc.ConnectTimeout,
@@ -48,7 +50,4 @@ def url_check(url):
             exception_errs.append(
                 f"Request Exception Error: {str(rqx_err)}"
             )
-    if exception_errs:
-        return req.status_code, exception_errs
-    else:
-        return req.status_code, None
+            return None, exception_errs

@@ -25,9 +25,10 @@ box-shadow: 2px 2px 2px gray;
 }
 
 #search {
-    width: 500px;
+    width: 75%;
     margin: 4px auto;
-    max-width: 800px;
+    max-width: 600px;
+    text-align: center;
     }
 
 #results-wrapper {

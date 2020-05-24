@@ -125,7 +125,6 @@
       template: '<div id="chart"></div>',
       link: function (scope) {
         scope.$watch('donationsCountByWeek', function() {
-          console.log("directive loaded...");
           d3.select('#chart').selectAll('*').remove();
           var data = scope.donationsCountByWeek
           for (var each in data){

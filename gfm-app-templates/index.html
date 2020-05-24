@@ -15,9 +15,9 @@
 
     <div class="container">
       <div class="row" style="text-align: center;">
-          <h1>GFM Campaign Metrics & Analysis Page</h1>
+          <h1>GFM Campaign Analysis App</h1>
           <br>
-          <h3>Provide the URL of the GoFundMe Campaign's main page</h3>
+          <h4>Provide the URL of a Campaign's main page</h4>
           <br>
           <form role="form" ng-submit="getResults()">
 
@@ -53,12 +53,12 @@
 
     <div class="container" style="text-align: center;">
       <br>
-      <h1>Metrics and Analysis</h1>
+      <h1>Metrics and Visuals</h1>
       <br>
     </div>
 
     <!--div id="results" ng-show="responseData"-->
-    <div id="results-wrapper" class="container" ng-show="responseData">
+    <div id="results-wrapper" class="container" ng-show="responseData && !urlerror">
 
       {% raw %}
       <div id="top-level-container" class="row">
@@ -150,145 +150,6 @@
       
       <div id="lists-container" class="row">
 
-        <div id="results-right-side" class="col-sm-4">
-        <h3>Big Donors List</h3>
-        <br>
-        <div ng-show="responseData.bigDonors50.length > 0">
-          <h4>Donated Over 50% of Total</h4>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody ng-repeat="d in responseData.bigDonors50">
-              <tr>
-                <td>{{ d.full_name }}</td>
-                <td>{{ d.amount | currency:"$":0 }}</td>
-              </tr>
-            </tbody>
-          </table>
-        <br><br></div>
-        <div ng-show="responseData.bigDonors25.length > 0">
-          <h4>Donated Over 25% of Total</h4>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody ng-repeat="d in responseData.bigDonors25">
-              <tr>
-                <td>{{ d.full_name }}</td>
-                <td>{{ d.amount | currency:"$":0 }}</td>
-              </tr>
-            </tbody>
-          </table>
-        <br><br></div>
-        <div ng-show="responseData.bigDonors20.length > 0">
-          <h4>Donated Over 20% of Total</h4>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody ng-repeat="d in responseData.bigDonors20">
-              <tr>
-                <td>{{ d.full_name }}</td>
-                <td>{{ d.amount | currency:"$":0 }}</td>
-              </tr>
-            </tbody>
-          </table>
-        <br><br></div>
-        <div ng-show="responseData.bigDonors10.length > 0">
-          <h4>Donated Over 10% of Total</h4>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody ng-repeat="d in responseData.bigDonors10">
-              <tr>
-                <td>{{ d.full_name }}</td>
-                <td>{{ d.amount | currency:"$":0 }}</td>
-              </tr>
-            </tbody>
-          </table>
-        <br><br></div>
-        <div ng-show="responseData.bigDonors05.length > 0">
-          <h4>Donated Over 5% of Total</h4>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody ng-repeat="d in responseData.bigDonors05">
-              <tr>
-                <td>{{ d.full_name }}</td>
-                <td>{{ d.amount | currency:"$":0 }}</td>
-              </tr>
-            </tbody>
-          </table>
-        <br><br></div>
-        <div ng-show="responseData.bigDonors03.length > 0">
-          <h4>Donated Over 3% of Total</h4>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody ng-repeat="d in responseData.bigDonors03">
-              <tr>
-                <td>{{ d.full_name }}</td>
-                <td>{{ d.amount | currency:"$":0 }}</td>
-              </tr>
-            </tbody>
-          </table>
-        <br><br></div>
-        <div ng-show="responseData.bigDonors02.length > 0">
-          <h4>Donated Over 2% of Total</h4>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody ng-repeat="d in responseData.bigDonors02">
-              <tr>
-                <td>{{ d.full_name }}</td>
-                <td>{{ d.amount | currency:"$":0 }}</td>
-              </tr>
-            </tbody>
-          </table>
-        <br><br></div>
-        <div ng-show="responseData.bigDonors01.length > 0">
-          <h4>Donated Over 1% of Total</h4>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody ng-repeat="d in responseData.bigDonors01">
-              <tr>
-                <td>{{ d.full_name }}</td>
-                <td>{{ d.amount | currency:"$":0 }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
         <div id="results-left-side" class="col-sm-7">
           <h3>Donors List</h3>
           <table class="table table-striped" style="text-align: left" ng-show="responseData">
@@ -312,6 +173,146 @@
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <div id="results-right-side" class="col-sm-4">
+          <h3>Big Donors List</h3>
+          <br>
+          <div ng-show="responseData.bigDonors50.length > 0">
+            <h4>Donated Over 50% of Total</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="d in responseData.bigDonors50">
+                <tr>
+                  <td>{{ d.full_name }}</td>
+                  <td>{{ d.amount | currency:"$":0 }}</td>
+                </tr>
+              </tbody>
+            </table>
+          <br><br></div>
+          <div ng-show="responseData.bigDonors25.length > 0">
+            <h4>Donated Over 25% of Total</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="d in responseData.bigDonors25">
+                <tr>
+                  <td>{{ d.full_name }}</td>
+                  <td>{{ d.amount | currency:"$":0 }}</td>
+                </tr>
+              </tbody>
+            </table>
+          <br><br></div>
+          <div ng-show="responseData.bigDonors20.length > 0">
+            <h4>Donated Over 20% of Total</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="d in responseData.bigDonors20">
+                <tr>
+                  <td>{{ d.full_name }}</td>
+                  <td>{{ d.amount | currency:"$":0 }}</td>
+                </tr>
+              </tbody>
+            </table>
+          <br><br></div>
+          <div ng-show="responseData.bigDonors10.length > 0">
+            <h4>Donated Over 10% of Total</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="d in responseData.bigDonors10">
+                <tr>
+                  <td>{{ d.full_name }}</td>
+                  <td>{{ d.amount | currency:"$":0 }}</td>
+                </tr>
+              </tbody>
+            </table>
+          <br><br></div>
+          <div ng-show="responseData.bigDonors05.length > 0">
+            <h4>Donated Over 5% of Total</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="d in responseData.bigDonors05">
+                <tr>
+                  <td>{{ d.full_name }}</td>
+                  <td>{{ d.amount | currency:"$":0 }}</td>
+                </tr>
+              </tbody>
+            </table>
+          <br><br></div>
+          <div ng-show="responseData.bigDonors03.length > 0">
+            <h4>Donated Over 3% of Total</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="d in responseData.bigDonors03">
+                <tr>
+                  <td>{{ d.full_name }}</td>
+                  <td>{{ d.amount | currency:"$":0 }}</td>
+                </tr>
+              </tbody>
+            </table>
+          <br><br></div>
+          <div ng-show="responseData.bigDonors02.length > 0">
+            <h4>Donated Over 2% of Total</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="d in responseData.bigDonors02">
+                <tr>
+                  <td>{{ d.full_name }}</td>
+                  <td>{{ d.amount | currency:"$":0 }}</td>
+                </tr>
+              </tbody>
+            </table>
+          <br><br></div>
+          <div ng-show="responseData.bigDonors01.length > 0">
+            <h4>Donated Over 1% of Total</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="d in responseData.bigDonors01">
+                <tr>
+                  <td>{{ d.full_name }}</td>
+                  <td>{{ d.amount | currency:"$":0 }}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

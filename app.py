@@ -40,7 +40,7 @@ def worker_task(url):
     <desc url> webpage url
 
     <<type result>> Result
-    <<desc result>> relevant information from webpage scrape
+    <<desc result>> response from db_put call
     '''
             
     resp, data = app_manager.url_manager(url)
@@ -52,7 +52,7 @@ def worker_task(url):
 
 
 def db_put(url, results=None, errors=None):
-    errors= []
+    db_errs= []
     # save the results
     try:
         from models import Result
@@ -72,10 +72,10 @@ def db_put(url, results=None, errors=None):
         db.session.commit()
         return result.id
     except Exception as err:
-        errors.append(
+        db_errs.append(
             f"Unable to add item to database:{str(err)}"
         )
-        return {"errors": errors}
+        return {"errors": db_errs}
 
 
 
@@ -95,6 +95,8 @@ def load_worker():
 
     if not url[:8].startswith(('https://', 'http://')):
         url = 'https://' + url
+    elif url[:7].startswith('http://'):
+        url = url.replace('http://', 'https://')
 
     # throw job to worker
     job = q.enqueue_call(

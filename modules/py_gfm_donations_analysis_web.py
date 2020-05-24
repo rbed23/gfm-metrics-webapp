@@ -34,7 +34,6 @@ def create_gfm_gateway_call(url, limit, offset):
     gfmcn = url.split('/')[4]
     gwurl = f"https://gateway.gofundme.com/web-gateway/v1/feed/{gfmcn}/"
     gwurl += f"donations?limit={limit}&offset={offset}&sort={SORT_DIRECTION}"
-    print(f'calling <{gwurl}')
 
     return gwurl
 
@@ -53,10 +52,12 @@ def get_donations_list(url):
     DONATIONS_LIMIT = 100     # maximum returned donations (GFM limit)
     offset_value = 0          # starting offset value
     finished_flag = False
+    print("calling:")
     while not finished_flag:
-
         gwurl = create_gfm_gateway_call(url, DONATIONS_LIMIT, offset_value)
         offset_value += DONATIONS_LIMIT
+
+        print(f' <{gwurl}>')
 
         try:
             u_response = requests.get(gwurl).content.decode('utf-8')
@@ -187,18 +188,18 @@ def get_donations_count(donationsList):
 
 
 def main(url):
-    print(f"Called script using <{url}> as input...")
-
     # get clean list of donations from the GFM Gateway
     donations_list = get_donations_list(url)
 
-    cleaned_list = [{'amount': x['amount'],
+    cleaned_list = [
+                    {'amount': x['amount'],
                      'name': fix_names(x['name']),
                      'is_anonymous': x['is_anonymous'],
                      'created_at': x['created_at'],
                      'donation_id': x['donation_id'],
                      'profile': x['profile_url'],
-                     'verified': x['verified']} for x in donations_list]
+                     'verified': x['verified']
+                     } for x in donations_list]
 
     # consolidate donors
     donations = [x["amount"] for x in cleaned_list]
