@@ -23,8 +23,8 @@ nltk = "==3.4.5"
 beautifulsoup4 = "==4.8.2"
 tld = "*"
 validators = "*"
-redis = "==3.4.1"
 rq = "===1.4.1"
+redis = "*"
 
 [requires]
 python_version = "3.7.4"
