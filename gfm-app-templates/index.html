@@ -149,30 +149,6 @@
       <br><br>
       
       <div id="lists-container" class="row">
-        <div id="results-left-side" class="col-sm-7">
-        <h3>Donors List</h3>
-        <table class="table table-striped" style="text-align: left" ng-show="responseData">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Amount(s)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="d in responseData.listComplete">
-              <td style="vertical-align: middle">{{ d.full_name }} </td>
-              <td>
-                <i><b>{{ d.details[0].amount | currency:"$":0 }}</b> on {{ d.details[0].date | dateTimeChop:0:10 }}</i><br>
-                <i ng-if="d.details[1]"><b>{{ d.details[1].amount | currency:"$":0 }}</b> on {{ d.details[1].date | dateTimeChop:0:10 }}<br></i>
-                <i ng-if="d.details[2]"><b>{{ d.details[2].amount | currency:"$":0 }}</b> on {{ d.details[2].date | dateTimeChop:0:10 }}<br></i>
-                <i ng-if="d.details[3]"><b>{{ d.details[3].amount | currency:"$":0 }}</b> on {{ d.details[3].date | dateTimeChop:0:10 }}<br></i>
-                <i ng-if="d.details[4]"><b>{{ d.details[4].amount | currency:"$":0 }}</b> on {{ d.details[4].date | dateTimeChop:0:10 }}<br></i>
-                </td>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
 
         <div id="results-right-side" class="col-sm-4">
         <h3>Big Donors List</h3>
@@ -314,6 +290,29 @@
           </table>
         </div>
 
+        <div id="results-left-side" class="col-sm-7">
+          <h3>Donors List</h3>
+          <table class="table table-striped" style="text-align: left" ng-show="responseData">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Amount(s)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="d in responseData.listComplete">
+                <td style="vertical-align: middle">{{ d.full_name }} </td>
+                <td>
+                  <i><b>{{ d.details[0].amount | currency:"$":0 }}</b> on {{ d.details[0].date | dateTimeChop:0:10 }}</i><br>
+                  <i ng-if="d.details[1]"><b>{{ d.details[1].amount | currency:"$":0 }}</b> on {{ d.details[1].date | dateTimeChop:0:10 }}<br></i>
+                  <i ng-if="d.details[2]"><b>{{ d.details[2].amount | currency:"$":0 }}</b> on {{ d.details[2].date | dateTimeChop:0:10 }}<br></i>
+                  <i ng-if="d.details[3]"><b>{{ d.details[3].amount | currency:"$":0 }}</b> on {{ d.details[3].date | dateTimeChop:0:10 }}<br></i>
+                  <i ng-if="d.details[4]"><b>{{ d.details[4].amount | currency:"$":0 }}</b> on {{ d.details[4].date | dateTimeChop:0:10 }}<br></i>
+                  </td>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
