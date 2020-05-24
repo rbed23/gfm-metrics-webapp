@@ -51,14 +51,14 @@
       </div>
     </div>
 
-    <div class='container'>
+    <div class="container" style="text-align: center;">
       <br>
       <h1>Metrics and Analysis</h1>
       <br>
     </div>
 
     <!--div id="results" ng-show="responseData"-->
-    <div id="results-wrapper" class="container">
+    <div id="results-wrapper" class="container" ng-show="responseData">
 
       {% raw %}
       <div id="top-level-container" class="row">
@@ -151,7 +151,7 @@
       <div id="lists-container" class="row">
         <div id="results-left-side" class="col-sm-7">
         <h3>Donors List</h3>
-        <table class="table table-striped" style="text-align: left">
+        <table class="table table-striped" style="text-align: left" ng-show="responseData">
           <thead>
             <tr>
               <th>Name</th>
@@ -329,5 +329,9 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script src="{{ url_for('static', filename='main.js') }}"></script>
   </body>
-  <footer>Here goes the footer</footer>
+  <footer style="text-align: center;">
+    WebApp Developed by <a href="https://www.github.com/rbed23">rbed23</a><br>
+    &copy; Copyright 
+    <script type="text/JavaScript">document.write(new Date().getFullYear());</script><br>
+  </footer>
 </html>
