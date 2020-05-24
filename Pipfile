@@ -21,10 +21,10 @@ flask-migrate = "==2.5.2"
 flask-script = "==2.0.6"
 nltk = "==3.4.5"
 beautifulsoup4 = "==4.8.2"
-redis = "*"
-rq = "*"
 tld = "*"
 validators = "*"
+redis = "==3.4.1"
+rq = "==1.2.2"
 
 [requires]
 python_version = "3.7.4"
