@@ -24,7 +24,7 @@ beautifulsoup4 = "==4.8.2"
 tld = "*"
 validators = "*"
 redis = "==3.4.1"
-rq = "==1.2.2"
+rq = "===1.4.1"
 
 [requires]
 python_version = "3.7.4"
