@@ -94,16 +94,14 @@ def load_worker():
     url = data['url']
 
     if not url[:8].startswith(('https://', 'http://')):
-        url = 'http://' + url
+        url = 'https://' + url
 
     # throw job to worker
-    print("queueing job...")
     job = q.enqueue_call(
         func=worker_task,
         args=(url,),
         result_ttl=5000
     )
-    print(f"job.id: {job.get_id()}")
 
     return job.get_id()
 
@@ -112,23 +110,6 @@ def load_worker():
 def get_results(job_key):
 
     job = Job.fetch(job_key, connection=conn)
-    print(f"job fetched:\n{job}")
-
-
-    wq = Worker.all(queue=q)
-    for each in wq:
-        print(f"worker q: {each}")
-        print(f"worker name: {each.name}")
-        print(f"host: {each.hostname}")
-        print(f"pid: {each.pid}")
-        print(f"queues: {each.queues}")
-        print(f"state: {each.state}")
-        # print(f"current job: {each.current_job}")
-        print(f"birth: {each.birth_date}")
-        # print(f"last beat: {each.last_heartbeat}")
-        print(f"successful jobs: {each.successful_job_count}")
-        print(f"failed jobs: {each.failed_job_count}")
-        print(f"time alive: {each.total_working_time}")
         
     if job.is_finished:
         from models import Result
