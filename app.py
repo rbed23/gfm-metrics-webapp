@@ -10,14 +10,11 @@ import operator
 import os
 
 # 3rd party liraries
-from bs4 import BeautifulSoup
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from requests import get, exceptions as rx
-import nltk
 from rq import Queue, Worker
 from rq.job import Job
-from validators import url as vurl
 
 # locals
 from modules import app_manager
