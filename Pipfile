@@ -18,10 +18,10 @@ flask-sqlalchemy = "===2.4.1"
 flask-migrate = "==2.5.2"
 flask-script = "==2.0.6"
 validators = "*"
-rq = "===1.4.1"
-redis = "===3.4.1"
 psycopg2 = "===2.8.4"
 python-dotenv = "*"
+rq = "===1.4.2"
+redis = "===3.5.2"
 
 [requires]
 python_version = "3.7.4"
