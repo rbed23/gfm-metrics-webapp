@@ -1,7 +1,6 @@
 *.pyc
 *.json
-!gfm-site-templates
-migrations/
+ migrations/
 redis-6.0.1/
 .env
 .pre-commit*
