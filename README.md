@@ -12,6 +12,7 @@ Please visit the app to test and provide comments and recommendations.
 
 [GFM Campaign Metrics App](https://gfm-metrics-app-stage.herokuapp.com)
 
+[Example GFM Metrics Page Image](docs/gfm-page-ex.png)
 
 ## Please note the following list of assumptions
 * user must be able to navigate and find an existing GoFundMe campaign

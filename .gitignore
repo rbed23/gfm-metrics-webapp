@@ -1,4 +1,10 @@
 *.pyc
 *.json
-*.html
 !gfm-site-templates
+migrations/
+redis-6.0.1/
+.env
+.pre-commit*
+*.rdb
+*.lock
+.gitignore
