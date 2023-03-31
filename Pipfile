@@ -21,7 +21,7 @@ validators = "*"
 psycopg2 = "===2.8.4"
 python-dotenv = "*"
 rq = "===1.4.2"
-redis = "===3.5.2"
+redis = "===4.4.4"
 
 [requires]
 python_version = "3.7.4"
